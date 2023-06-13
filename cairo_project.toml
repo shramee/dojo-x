@@ -1,5 +1,3 @@
 [crate_roots]
-dao = "./src/dao"
-universe = "./src/universe"
-world = "./src/world"
+dojo_x = "./src"
 # world1 = ""
