@@ -1,4 +1,11 @@
-use starknet::ContractAddress;
+use traits::{Into, TryInto, };
+use starknet::{
+    ContractAddressIntoFelt252, Felt252TryIntoContractAddress, ContractAddress, StorageAccess,
+    StorageBaseAddress, SyscallResult, storage_read_syscall, storage_write_syscall,
+    storage_address_from_base, storage_address_from_base_and_offset, contract_address_const
+};
+use option::OptionTrait;
+use result::{Result, ResultTrait};
 
 #[derive(Drop, Serde)]
 struct World {
@@ -6,6 +13,25 @@ struct World {
     addr: ContractAddress,
 }
 
+impl StorageAccessWorld of StorageAccess<World> {
+    fn read(address_domain: u32, base: StorageBaseAddress) -> SyscallResult<World> {
+        let addr_felt = storage_read_syscall(
+            address_domain, storage_address_from_base_and_offset(base, 1_u8)
+        )?;
+        Result::Ok(
+            World {
+                name: StorageAccess::<felt252>::read(address_domain, base)?,
+                addr: addr_felt.try_into().expect('StorageAccessWorld - wrong data')
+            }
+        )
+    }
+    fn write(address_domain: u32, base: StorageBaseAddress, value: World) -> SyscallResult<()> {
+        StorageAccess::<felt252>::write(address_domain, base, value.name)?;
+        storage_write_syscall(
+            address_domain, storage_address_from_base_and_offset(base, 1_u8), value.addr.into()
+        )
+    }
+}
 #[contract]
 mod Universe {
     use starknet::{ContractAddress, contract_address_const};
@@ -13,8 +39,8 @@ mod Universe {
     use array::ArrayTrait;
     use super::World;
     struct Storage {
-        worlds: LegacyMap<usize, felt252>,
-        world_addr: LegacyMap<felt252, ContractAddress>,
+        worlds: LegacyMap<usize, World>,
+        world_names: LegacyMap<felt252, World>,
         worlds_count: usize,
     }
 
@@ -22,15 +48,14 @@ mod Universe {
     fn WorldRegistered(world: World) {}
 
     #[external]
-    fn register_world(world_name: felt252, world_addr: ContractAddress) -> usize {
-        let world_exists = world_addr::read(world_name);
+    fn register_world(name: felt252, addr: ContractAddress) {
+        let world_exists = world_names::read(name).addr;
         assert(contract_address_const::<0>() == world_exists, 'World already exists');
 
         let wi = worlds_count::read();
         worlds_count::write(wi + 1);
-        world_addr::write(world_name, world_addr);
-        worlds::write(wi, world_name);
-        wi
+        worlds::write(wi, World { name, addr });
+        world_names::write(name, World { name, addr });
     }
 
     #[view]
@@ -42,8 +67,7 @@ mod Universe {
             if num_items <= i {
                 break ();
             }
-            let name = worlds::read(i);
-            arr.append(World { name, addr: world_addr::read(name),  });
+            arr.append(worlds::read(i));
             i += 1;
         };
         arr
