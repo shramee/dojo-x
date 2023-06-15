@@ -1,7 +1,7 @@
 use core::option::OptionTrait;
 use core::array::ArrayTrait;
 use core::traits::TryInto;
-use super::base::Universe;
+use super::universe_contract::Universe;
 use starknet::{ContractAddress, contract_address_const};
 use starknet::testing::set_caller_address;
 use box::BoxTrait;
