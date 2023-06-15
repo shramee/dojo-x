@@ -1,6 +1,5 @@
 use array::ArrayTrait;
 
-
 #[derive(Component, Copy, Drop, Serde)]
 struct Color {
     v: (u8, u8, u8), 
@@ -26,4 +25,3 @@ struct Acc {
     x: u32,
     y: u32,
 }
-
