@@ -1,2 +1,2 @@
-mod base;
-mod tests;
+mod universe_contract;
+mod universe_tests;
