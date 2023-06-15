@@ -1,5 +1,5 @@
 [package]
-name = "dojo_examples"
+name = "dojo_autonomous_agents"
 version = "0.1.0"
 cairo-version = "1.1.0"
 
@@ -9,6 +9,7 @@ sierra-replace-ids = true
 
 [dependencies]
 dojo_core = { git = "https://github.com/dojoengine/dojo", version = "0.1.0"}
+starknet = "1.0.0"
 
 [[target.dojo]]
 

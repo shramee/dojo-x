@@ -1,45 +1,29 @@
 use array::ArrayTrait;
 
+
+#[derive(Component, Copy, Drop, Serde)]
+struct Color {
+    v: (u8, u8, u8), 
+}
+
 #[derive(Component, Copy, Drop, Serde)]
 #[component(indexed = true)]
-struct Moves {
-    remaining: u8, 
+struct Pos {
+    x: u32,
+    y: u32,
 }
 
 #[derive(Component, Copy, Drop, Serde)]
-struct Position {
+#[component(indexed = true)]
+struct Vel {
     x: u32,
-    y: u32
+    y: u32,
 }
 
-trait PositionTrait {
-    fn is_zero(self: Position) -> bool;
-    fn is_equal(self: Position, b: Position) -> bool;
+#[derive(Component, Copy, Drop, Serde)]
+#[component(indexed = true)]
+struct Acc {
+    x: u32,
+    y: u32,
 }
 
-impl PositionImpl of PositionTrait {
-    fn is_zero(self: Position) -> bool {
-        if self.x - self.y == 0 {
-            return true;
-        }
-        false
-    }
-
-    fn is_equal(self: Position, b: Position) -> bool {
-        self.x == b.x & self.y == b.y
-    }
-}
-
-#[test]
-#[available_gas(100000)]
-fn test_position_is_zero() {
-    assert(PositionTrait::is_zero(Position { x: 0, y: 0 }), 'not zero');
-}
-
-#[test]
-#[available_gas(100000)]
-fn test_position_is_equal() {
-    assert(
-        PositionTrait::is_equal(Position { x: 420, y: 0 }, Position { x: 420, y: 0 }), 'not equal'
-    );
-}
