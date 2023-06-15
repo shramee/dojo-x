@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Rust Code Editor with CodeMirror</title>
+    <!-- CodeMirror styles -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/theme/material.min.css"
+    />
+    <!-- CodeMirror scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/rust/rust.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/edit/matchbrackets.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/edit/closebrackets.js"></script> -->
+    <style>
+      html,
+      body {
+        margin: 0;
+        font: 16px / 1.5 sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+      canvas#canvas {
+        width: 100vmin;
+        height: 100vmin;
+        margin: 3px;
+        outline: 1px solid #ccc;
+        outline-offset: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas" width="800" height="800"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/dumb-renderer@0.1.0/dist/index.global.js"></script>
+    <script src="ecs-data.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
