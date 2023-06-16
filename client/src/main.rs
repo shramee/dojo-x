@@ -10,10 +10,11 @@ fn rocket() -> rocket::Rocket {
 }
 
 fn main() {
-    let world_addr = env::var("WORLD_ADDR").unwrap();
+    let world_addr = env::var("WORLD_ADDR").unwrap_or("".into());
+    let rpc_addr = env::var("RPC_ADDR").unwrap_or("http://localhost:5050".into());
     fs::write(
         "./static/ecs-data.js",
-        format!("window.ecs_data={{world_addr:\"{world_addr}\"}};"),
+        format!("window.ecs_data={{world_addr:\"{world_addr}\",rpc:\"{rpc_addr}\"}};"),
     )
     .unwrap();
     rocket().launch();
