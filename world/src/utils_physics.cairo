@@ -8,17 +8,31 @@ use starknet::{
 use option::OptionTrait;
 use result::{Result, ResultTrait};
 
+// This is also the world size
+// Adjust math for this!
+const ZERO: u32 = 1000000;
+const RANGE: u32 = 20000;
+
+// Converts percentage * 100 into a ZERO based value
+// 100 is center of the map
+// 50 is left/top half center of the map
+// 200 is right/bottom most point on the map
+fn val_from_2xpc(pc2x: u32) -> u32 {
+    let half_range = RANGE / 2;
+    ZERO - half_range + (half_range * pc2x) / 100
+}
+
 #[derive(Copy, Drop, Serde)]
 struct Vec2 {
-    x: u128,
-    y: u128
+    x: u32,
+    y: u32
 }
 
 impl StorageAccessVec2 of StorageAccess<Vec2> {
     fn read(address_domain: u32, base: StorageBaseAddress) -> SyscallResult<Vec2> {
         Result::Ok(
             Vec2 {
-                x: StorageAccess::<u128>::read(address_domain, base)?,
+                x: StorageAccess::<u32>::read(address_domain, base)?,
                 y: storage_read_syscall(
                     address_domain, storage_address_from_base_and_offset(base, 1_u8)
                 )?
@@ -28,7 +42,7 @@ impl StorageAccessVec2 of StorageAccess<Vec2> {
         )
     }
     fn write(address_domain: u32, base: StorageBaseAddress, value: Vec2) -> SyscallResult<()> {
-        StorageAccess::<u128>::write(address_domain, base, value.x)?;
+        StorageAccess::<u32>::write(address_domain, base, value.x)?;
         storage_write_syscall(
             address_domain, storage_address_from_base_and_offset(base, 1_u8), value.y.into()
         )
@@ -36,17 +50,17 @@ impl StorageAccessVec2 of StorageAccess<Vec2> {
 }
 
 trait Vec2Trait {
-    fn new(x: u128, y: u128) -> Vec2;
+    fn new(x: u32, y: u32) -> Vec2;
     fn zero() -> Vec2;
 }
 
 impl Vec2Impl of Vec2Trait {
-    fn new(x: u128, y: u128) -> Vec2 {
+    fn new(x: u32, y: u32) -> Vec2 {
         Vec2 { x, y }
     }
 
     fn zero() -> Vec2 {
-        Vec2Impl::new(0, 0, )
+        Vec2Impl::new(ZERO, ZERO, )
     }
 }
 

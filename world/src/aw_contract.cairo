@@ -1,5 +1,5 @@
 use core::traits::Into;
-use super::utils_physics::{Vec2, Vec2Trait};
+use super::utils_physics::{Vec2, Vec2Trait, ZERO, RANGE, val_from_2xpc};
 
 // This is the world contract
 #[contract]
@@ -73,7 +73,7 @@ mod World {
 
     fn spawn_bundle(entity_id: felt252, position: Vec2, velocity: Vec2) {
         add_entity_component(entity_id, Components::position(position));
-        add_entity_component(entity_id, Components::velocity(Vec2Trait::zero()));
+        add_entity_component(entity_id, Components::velocity(velocity));
         add_entity_component(entity_id, Components::acceleration(Vec2Trait::zero()));
     }
 
@@ -91,9 +91,31 @@ mod World {
     // Updates the world at regular intervals
     #[external]
     fn update() {
-        apply_physics();
+        apply_physics('mover');
+        apply_physics('seeker');
+
+
     }
 
     // Applies physics via update
-    fn apply_physics() {}
+    fn apply_physics(entity_id: felt252) {
+        let (mut p, mut v, mut a) = util_get_entity_physics(entity_id);
+
+        // Add acceleration to velocity
+        v.x += a.x - world::utils_physics::ZERO;
+        v.y += a.y - world::utils_physics::ZERO;
+        // Add velocity to position
+        p.x += v.x - world::utils_physics::ZERO;
+        p.y += v.y - world::utils_physics::ZERO;
+        
+        spawn_bundle(entity_id, p, v);
+}
+
+fn util_get_entity_physics(entity_id: felt252) -> (Vec2, Vec2, Vec2) {
+    (
+        position::read(entity_id),
+        velocity::read(entity_id),
+        acceleration::read(entity_id),
+    )
+    }
 }
