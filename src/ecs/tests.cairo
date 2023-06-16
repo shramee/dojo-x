@@ -4,10 +4,10 @@ use array::ArrayTrait;
 use dojo_core::auth::systems::{Route, RouteTrait};
 use dojo_core::interfaces::{IWorldDispatcherTrait, IWorldDispatcher};
 use dojo_core::test_utils::spawn_test_world;
-use dojo_autonomous_agents::components::{
+use dojo_x::ecs::components::{
     PosComponent, VelComponent, AccComponent, ColorComponent, ZERO, RANGE, val_from_2xpc
 };
-use dojo_autonomous_agents::systems::{Spawn, Update};
+use dojo_x::ecs::systems::{Spawn, Update};
 use debug::PrintTrait;
 
 fn setup_world() -> IWorldDispatcher {

@@ -2,7 +2,7 @@
 mod Spawn {
     use traits::Into;
     use array::ArrayTrait;
-    use dojo_autonomous_agents::components::{Color, Pos, Vel, Acc, ZERO, val_from_2xpc};
+    use dojo_x::ecs::components::{Color, Pos, Vel, Acc, ZERO, val_from_2xpc};
 
     fn execute(ctx: Context) {
         commands::set_entity('mover_color'.into(), (Color { v: 0xf50505 }));
@@ -31,7 +31,7 @@ mod Spawn {
 mod Update {
     use array::ArrayTrait;
     use traits::Into;
-    use dojo_autonomous_agents::components::{Pos, Vel, Acc, Vec2, ZERO, val_from_2xpc};
+    use dojo_x::ecs::components::{Pos, Vel, Acc, Vec2, ZERO, val_from_2xpc};
     use debug::PrintTrait;
 
     // use dojo_core::storage::query::{QueryTrait};

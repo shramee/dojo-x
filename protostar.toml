@@ -1,0 +1,7 @@
+[project]
+protostar-version = "0.13.0"
+
+[contracts]
+dao = ["./src/dao/base.cairo"]
+universe = ["./src/universe/universe_contract.cairo"]
+
