@@ -24,6 +24,10 @@ deploy:
 		--private-key-path ../.private_key --max-fee 99999999999)"; echo "$$DEPLOYMENT_LOG"; \
 	# [ -n "$$DEPLOYMENT_LOG" ] && echo "$$DEPLOYMENT_LOG" >> ./last_deployment;
 
+	cd world; DEPLOYMENT_LOG="$$(protostar declare world --network testnet --account-address $(ACCOUNT) --network testnet \
+		--private-key-path ../.private_key --max-fee 99999999999)"; echo "$$DEPLOYMENT_LOG"; \
+	# [ -n "$$DEPLOYMENT_LOG" ] && echo "$$DEPLOYMENT_LOG" >> ./last_deployment;
+
 serve:
 	@cd ./client; \
 	rustup override set nightly; \

@@ -1,1 +1,0 @@
-    // Add component to entity
