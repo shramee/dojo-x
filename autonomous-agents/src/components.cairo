@@ -13,6 +13,12 @@ fn val_from_2xpc(pc2x: u32) -> u32 {
     (ZERO * pc2x / 100)
 }
 
+#[derive(Copy, Drop, Serde)]
+struct Vec2 {
+    x: u32,
+    y: u32,
+}
+
 #[derive(Component, Copy, Drop, Serde)]
 struct Color {
     v: u32, 
