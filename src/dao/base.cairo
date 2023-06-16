@@ -1,3 +1,10 @@
+#[abi]
+trait IWorldManagement {
+
+    #[external]
+    fn updateWorldColor(color: u32) -> bool;
+}
+
 use core::box::BoxTrait;
 use core::option::{OptionTrait, Option};
 use core::array::ArrayTrait;
@@ -12,6 +19,7 @@ use starknet::{
 enum Actions {
     DistributeFunds: (),
     OpenAdCampaign: (),
+    UpdateWorldColor: u32,
 
 }
 
@@ -59,7 +67,8 @@ impl StorageAccessProposal of StorageAccess<Proposal> {
             address_domain, storage_address_from_base_and_offset(base, 3_u8), 
             match value.action {
                 Actions::DistributeFunds(_) => 0,
-                Actions::OpenAdCampaign(_) => 1
+                Actions::OpenAdCampaign(_) => 1,
+                Actions::UpdateWorldColor(color) => 2
                 }
         )
     }
@@ -70,6 +79,9 @@ mod BaseDAO {
     use core::option::OptionTrait;
     use core::array::ArrayTrait;
     use core::box::BoxTrait;
+
+    use super::IWorldManagementDispatcherTrait;
+    use super::IWorldManagementDispatcher;
 
     use starknet::{
     ContractAddressIntoFelt252, Felt252TryIntoContractAddress, ContractAddress, StorageAccess,
@@ -87,7 +99,8 @@ use super::{Actions, Proposal};
         num_members: u32,
         voted: LegacyMap<(u32, ContractAddress), bool>,
         proposals: LegacyMap<u32, Proposal>,
-        num_proposals: usize
+        num_proposals: usize,
+        world_controlled: ContractAddress
     }
     
     #[constructor]
@@ -142,7 +155,8 @@ use super::{Actions, Proposal};
         
         match proposal_to_execute.action {
             Actions::DistributeFunds(_) => execute_fund_distribution(),
-            Actions::OpenAdCampaign(_) => execute_open_ad_campaign()
+            Actions::OpenAdCampaign(_) => execute_open_ad_campaign(),
+            Actions::UpdateWorldColor(color) => execute_update_world_color(color)
             }
     }
 
@@ -176,6 +190,10 @@ use super::{Actions, Proposal};
 
     fn execute_open_ad_campaign() {
 
+    }
+
+    fn execute_update_world_color(color: u32) {
+        IERC20Dispatcher { contract_address: world_controlled::read() }.updateWorldColor(color);
     }
 
 
