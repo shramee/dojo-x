@@ -25,15 +25,20 @@
 */
 class DojoCalls {
   constructor() {
-    this.rpc = new starknet.RpcProvider({
-      nodeUrl: ecs_data.rpc || 'localhost:5050',
-    });
+    let contract =
+      '0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7';
+    // this.rpc = new starknet.RpcProvider({
+    //   nodeUrl: ecs_data.rpc || 'localhost:5050',
+    // });
 
-    this.world = new starknet.Contract(
-      ecs_data.world_abi,
-      ecs_data.world_addr,
-      this.rpc,
-    );
+    setTimeout(async () => {
+      await starknet.enable();
+      this.contract = new starknet_.Contract(
+        ecs_data.abi,
+        contract,
+        starknet.provider,
+      );
+    }, 1000);
   }
 
   play() {

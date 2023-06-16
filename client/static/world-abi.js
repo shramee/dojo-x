@@ -1,450 +1,795 @@
 window.ecs_data = window.ecs_data || {};
 
-window.ecs_data.world_abi = [
+window.ecs_data.abi = [
   {
+    name: 'Uint256',
+    size: 2,
+    type: 'struct',
+    members: [
+      {
+        name: 'low',
+        type: 'felt',
+        offset: 0,
+      },
+      {
+        name: 'high',
+        type: 'felt',
+        offset: 1,
+      },
+    ],
+  },
+  {
+    data: [
+      {
+        name: 'from_',
+        type: 'felt',
+      },
+      {
+        name: 'to',
+        type: 'felt',
+      },
+      {
+        name: 'tokenId',
+        type: 'Uint256',
+      },
+    ],
+    keys: [],
+    name: 'Transfer',
+    type: 'event',
+  },
+  {
+    data: [
+      {
+        name: 'owner',
+        type: 'felt',
+      },
+      {
+        name: 'approved',
+        type: 'felt',
+      },
+      {
+        name: 'tokenId',
+        type: 'Uint256',
+      },
+    ],
+    keys: [],
+    name: 'Approval',
+    type: 'event',
+  },
+  {
+    data: [
+      {
+        name: 'owner',
+        type: 'felt',
+      },
+      {
+        name: 'operator',
+        type: 'felt',
+      },
+      {
+        name: 'approved',
+        type: 'felt',
+      },
+    ],
+    keys: [],
+    name: 'ApprovalForAll',
+    type: 'event',
+  },
+  {
+    data: [
+      {
+        name: 'implementation',
+        type: 'felt',
+      },
+    ],
+    keys: [],
+    name: 'Upgraded',
+    type: 'event',
+  },
+  {
+    data: [
+      {
+        name: 'previousAdmin',
+        type: 'felt',
+      },
+      {
+        name: 'newAdmin',
+        type: 'felt',
+      },
+    ],
+    keys: [],
+    name: 'AdminChanged',
+    type: 'event',
+  },
+  {
+    data: [
+      {
+        name: 'starknet_id',
+        type: 'felt',
+      },
+      {
+        name: 'field',
+        type: 'felt',
+      },
+      {
+        name: 'data',
+        type: 'felt',
+      },
+    ],
+    keys: [],
+    name: 'UserDataUpdate',
+    type: 'event',
+  },
+  {
+    data: [
+      {
+        name: 'starknet_id',
+        type: 'felt',
+      },
+      {
+        name: 'field',
+        type: 'felt',
+      },
+      {
+        name: 'data_len',
+        type: 'felt',
+      },
+      {
+        name: 'data',
+        type: 'felt*',
+      },
+    ],
+    keys: [],
+    name: 'ExtendedUserDataUpdate',
+    type: 'event',
+  },
+  {
+    data: [
+      {
+        name: 'starknet_id',
+        type: 'felt',
+      },
+      {
+        name: 'field',
+        type: 'felt',
+      },
+      {
+        name: 'data',
+        type: 'felt',
+      },
+      {
+        name: 'verifier',
+        type: 'felt',
+      },
+    ],
+    keys: [],
+    name: 'VerifierDataUpdate',
+    type: 'event',
+  },
+  {
+    data: [
+      {
+        name: 'starknet_id',
+        type: 'felt',
+      },
+      {
+        name: 'author',
+        type: 'felt',
+      },
+      {
+        name: 'field',
+        type: 'felt',
+      },
+      {
+        name: 'data_len',
+        type: 'felt',
+      },
+      {
+        name: 'data',
+        type: 'felt*',
+      },
+    ],
+    keys: [],
+    name: 'ExtendedVerifierDataUpdate',
+    type: 'event',
+  },
+  {
+    data: [
+      {
+        name: 'inft_contract',
+        type: 'felt',
+      },
+      {
+        name: 'inft_id',
+        type: 'felt',
+      },
+      {
+        name: 'starknet_id',
+        type: 'felt',
+      },
+    ],
+    keys: [],
+    name: 'on_inft_equipped',
+    type: 'event',
+  },
+  {
+    name: 'initializer',
     type: 'function',
-    name: 'constructor',
     inputs: [
       {
-        name: 'executor',
-        type: 'core::starknet::contract_address::ContractAddress',
+        name: 'proxy_admin',
+        type: 'felt',
+      },
+      {
+        name: 'uri_base_len',
+        type: 'felt',
+      },
+      {
+        name: 'uri_base',
+        type: 'felt*',
       },
     ],
     outputs: [],
-    stateMutability: 'external',
   },
   {
-    type: 'struct',
-    name: 'dojo_core::auth::systems::Route',
-    members: [
-      {
-        name: 'target_id',
-        type: 'core::felt252',
-      },
-      {
-        name: 'role_id',
-        type: 'core::felt252',
-      },
-      {
-        name: 'resource_id',
-        type: 'core::felt252',
-      },
-    ],
-  },
-  {
+    name: 'name',
     type: 'function',
-    name: 'initialize',
-    inputs: [
-      {
-        name: 'routes',
-        type: 'core::array::Array::<dojo_core::auth::systems::Route>',
-      },
-    ],
-    outputs: [],
-    stateMutability: 'external',
-  },
-  {
-    type: 'struct',
-    name: 'dojo_core::auth::components::AuthRole',
-    members: [
-      {
-        name: 'id',
-        type: 'core::felt252',
-      },
-    ],
-  },
-  {
-    type: 'function',
-    name: 'is_authorized',
-    inputs: [
-      {
-        name: 'system',
-        type: 'core::felt252',
-      },
-      {
-        name: 'component',
-        type: 'core::felt252',
-      },
-      {
-        name: 'execution_role',
-        type: 'dojo_core::auth::components::AuthRole',
-      },
-    ],
-    outputs: [
-      {
-        type: 'core::bool',
-      },
-    ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    name: 'is_account_admin',
     inputs: [],
     outputs: [
       {
-        type: 'core::bool',
+        name: 'name',
+        type: 'felt',
       },
     ],
     stateMutability: 'view',
   },
   {
+    name: 'symbol',
     type: 'function',
-    name: 'register_component',
-    inputs: [
-      {
-        name: 'class_hash',
-        type: 'core::starknet::class_hash::ClassHash',
-      },
-    ],
-    outputs: [],
-    stateMutability: 'external',
-  },
-  {
-    type: 'function',
-    name: 'component',
-    inputs: [
-      {
-        name: 'name',
-        type: 'core::felt252',
-      },
-    ],
-    outputs: [
-      {
-        type: 'core::starknet::class_hash::ClassHash',
-      },
-    ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    name: 'register_system',
-    inputs: [
-      {
-        name: 'class_hash',
-        type: 'core::starknet::class_hash::ClassHash',
-      },
-    ],
-    outputs: [],
-    stateMutability: 'external',
-  },
-  {
-    type: 'function',
-    name: 'system',
-    inputs: [
-      {
-        name: 'name',
-        type: 'core::felt252',
-      },
-    ],
-    outputs: [
-      {
-        type: 'core::starknet::class_hash::ClassHash',
-      },
-    ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    name: 'execute',
-    inputs: [
-      {
-        name: 'name',
-        type: 'core::felt252',
-      },
-      {
-        name: 'execute_calldata',
-        type: 'core::array::Span::<core::felt252>',
-      },
-    ],
-    outputs: [
-      {
-        type: 'core::array::Span::<core::felt252>',
-      },
-    ],
-    stateMutability: 'external',
-  },
-  {
-    type: 'function',
-    name: 'uuid',
     inputs: [],
     outputs: [
       {
-        type: 'core::integer::u32',
+        name: 'symbol',
+        type: 'felt',
       },
     ],
-    stateMutability: 'external',
+    stateMutability: 'view',
   },
   {
-    type: 'struct',
-    name: 'dojo_core::execution_context::Context',
-    members: [
-      {
-        name: 'world',
-        type: 'dojo_core::interfaces::IWorldDispatcher',
-      },
-      {
-        name: 'caller_account',
-        type: 'core::starknet::contract_address::ContractAddress',
-      },
-      {
-        name: 'caller_system',
-        type: 'core::felt252',
-      },
-      {
-        name: 'execution_role',
-        type: 'dojo_core::auth::components::AuthRole',
-      },
-    ],
-  },
-  {
-    type: 'struct',
-    name: 'dojo_core::storage::query::Query',
-    members: [
-      {
-        name: 'address_domain',
-        type: 'core::integer::u32',
-      },
-      {
-        name: 'partition',
-        type: 'core::felt252',
-      },
-      {
-        name: 'keys',
-        type: 'core::array::Span::<core::felt252>',
-      },
-    ],
-  },
-  {
+    name: 'balanceOf',
     type: 'function',
-    name: 'set_entity',
     inputs: [
       {
-        name: 'context',
-        type: 'dojo_core::execution_context::Context',
-      },
-      {
-        name: 'component',
-        type: 'core::felt252',
-      },
-      {
-        name: 'query',
-        type: 'dojo_core::storage::query::Query',
-      },
-      {
-        name: 'offset',
-        type: 'core::integer::u8',
-      },
-      {
-        name: 'value',
-        type: 'core::array::Span::<core::felt252>',
+        name: 'owner',
+        type: 'felt',
       },
     ],
-    outputs: [],
-    stateMutability: 'external',
-  },
-  {
-    type: 'function',
-    name: 'delete_entity',
-    inputs: [
+    outputs: [
       {
-        name: 'context',
-        type: 'dojo_core::execution_context::Context',
-      },
-      {
-        name: 'component',
-        type: 'core::felt252',
-      },
-      {
-        name: 'query',
-        type: 'dojo_core::storage::query::Query',
+        name: 'balance',
+        type: 'Uint256',
       },
     ],
-    outputs: [],
-    stateMutability: 'external',
+    stateMutability: 'view',
   },
   {
+    name: 'ownerOf',
     type: 'function',
-    name: 'entity',
     inputs: [
       {
-        name: 'component',
-        type: 'core::felt252',
+        name: 'starknet_id',
+        type: 'Uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: 'owner',
+        type: 'felt',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    name: 'owner_of',
+    type: 'function',
+    inputs: [
+      {
+        name: 'starknet_id',
+        type: 'felt',
+      },
+    ],
+    outputs: [
+      {
+        name: 'owner',
+        type: 'felt',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    name: 'getApproved',
+    type: 'function',
+    inputs: [
+      {
+        name: 'starknet_id',
+        type: 'Uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: 'approved',
+        type: 'felt',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    name: 'isApprovedForAll',
+    type: 'function',
+    inputs: [
+      {
+        name: 'owner',
+        type: 'felt',
       },
       {
-        name: 'query',
-        type: 'dojo_core::storage::query::Query',
+        name: 'operator',
+        type: 'felt',
+      },
+    ],
+    outputs: [
+      {
+        name: 'is_approved',
+        type: 'felt',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    name: 'tokenURI',
+    type: 'function',
+    inputs: [
+      {
+        name: 'tokenId',
+        type: 'Uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: 'tokenURI_len',
+        type: 'felt',
       },
       {
-        name: 'offset',
-        type: 'core::integer::u8',
+        name: 'tokenURI',
+        type: 'felt*',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    name: 'supportsInterface',
+    type: 'function',
+    inputs: [
+      {
+        name: 'interfaceId',
+        type: 'felt',
+      },
+    ],
+    outputs: [
+      {
+        name: 'success',
+        type: 'felt',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    name: 'get_user_data',
+    type: 'function',
+    inputs: [
+      {
+        name: 'starknet_id',
+        type: 'felt',
+      },
+      {
+        name: 'field',
+        type: 'felt',
+      },
+    ],
+    outputs: [
+      {
+        name: 'data',
+        type: 'felt',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    name: 'get_extended_user_data',
+    type: 'function',
+    inputs: [
+      {
+        name: 'starknet_id',
+        type: 'felt',
+      },
+      {
+        name: 'field',
+        type: 'felt',
       },
       {
         name: 'length',
-        type: 'core::integer::u32',
+        type: 'felt',
       },
     ],
     outputs: [
       {
-        type: 'core::array::Span::<core::felt252>',
+        name: 'data_len',
+        type: 'felt',
+      },
+      {
+        name: 'data',
+        type: 'felt*',
       },
     ],
     stateMutability: 'view',
   },
   {
+    name: 'get_unbounded_user_data',
     type: 'function',
-    name: 'entities',
     inputs: [
       {
-        name: 'component',
-        type: 'core::felt252',
+        name: 'starknet_id',
+        type: 'felt',
       },
       {
-        name: 'partition',
-        type: 'core::felt252',
+        name: 'field',
+        type: 'felt',
       },
     ],
     outputs: [
       {
-        type: '(core::array::Span::<core::felt252>, core::array::Span::<core::array::Span::<core::felt252>>)',
+        name: 'data_len',
+        type: 'felt',
+      },
+      {
+        name: 'data',
+        type: 'felt*',
       },
     ],
     stateMutability: 'view',
   },
   {
+    name: 'get_verifier_data',
     type: 'function',
-    name: 'set_executor',
     inputs: [
       {
-        name: 'contract_address',
-        type: 'core::starknet::contract_address::ContractAddress',
-      },
-    ],
-    outputs: [],
-    stateMutability: 'external',
-  },
-  {
-    type: 'function',
-    name: 'executor',
-    inputs: [],
-    outputs: [
-      {
-        type: 'core::starknet::contract_address::ContractAddress',
-      },
-    ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    name: 'assume_role',
-    inputs: [
-      {
-        name: 'role_id',
-        type: 'core::felt252',
+        name: 'starknet_id',
+        type: 'felt',
       },
       {
-        name: 'systems',
-        type: 'core::array::Array::<core::felt252>',
+        name: 'field',
+        type: 'felt',
       },
-    ],
-    outputs: [],
-    stateMutability: 'external',
-  },
-  {
-    type: 'function',
-    name: 'clear_role',
-    inputs: [
-      {
-        name: 'systems',
-        type: 'core::array::Array::<core::felt252>',
-      },
-    ],
-    outputs: [],
-    stateMutability: 'external',
-  },
-  {
-    type: 'function',
-    name: 'execution_role',
-    inputs: [],
-    outputs: [
-      {
-        type: 'core::felt252',
-      },
-    ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    name: 'system_components',
-    inputs: [
-      {
-        name: 'system',
-        type: 'core::felt252',
-      },
-    ],
-    outputs: [
-      {
-        type: 'core::array::Array::<(core::felt252, core::bool)>',
-      },
-    ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    name: 'is_system_for_execution',
-    inputs: [
-      {
-        name: 'system',
-        type: 'core::felt252',
-      },
-    ],
-    outputs: [
-      {
-        type: 'core::bool',
-      },
-    ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'event',
-    name: 'WorldSpawned',
-    inputs: [
       {
         name: 'address',
-        type: 'core::starknet::contract_address::ContractAddress',
-      },
-      {
-        name: 'caller',
-        type: 'core::starknet::contract_address::ContractAddress',
+        type: 'felt',
       },
     ],
+    outputs: [
+      {
+        name: 'data',
+        type: 'felt',
+      },
+    ],
+    stateMutability: 'view',
   },
   {
-    type: 'event',
-    name: 'ComponentRegistered',
+    name: 'get_extended_verifier_data',
+    type: 'function',
     inputs: [
       {
-        name: 'name',
-        type: 'core::felt252',
+        name: 'starknet_id',
+        type: 'felt',
       },
       {
-        name: 'class_hash',
-        type: 'core::starknet::class_hash::ClassHash',
+        name: 'field',
+        type: 'felt',
+      },
+      {
+        name: 'length',
+        type: 'felt',
+      },
+      {
+        name: 'address',
+        type: 'felt',
       },
     ],
+    outputs: [
+      {
+        name: 'data_len',
+        type: 'felt',
+      },
+      {
+        name: 'data',
+        type: 'felt*',
+      },
+    ],
+    stateMutability: 'view',
   },
   {
-    type: 'event',
-    name: 'SystemRegistered',
+    name: 'get_unbounded_verifier_data',
+    type: 'function',
     inputs: [
       {
-        name: 'name',
-        type: 'core::felt252',
+        name: 'starknet_id',
+        type: 'felt',
       },
       {
-        name: 'class_hash',
-        type: 'core::starknet::class_hash::ClassHash',
+        name: 'field',
+        type: 'felt',
+      },
+      {
+        name: 'address',
+        type: 'felt',
       },
     ],
+    outputs: [
+      {
+        name: 'data_len',
+        type: 'felt',
+      },
+      {
+        name: 'data',
+        type: 'felt*',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    name: 'get_equipped_starknet_id',
+    type: 'function',
+    inputs: [
+      {
+        name: 'inft_contract',
+        type: 'felt',
+      },
+      {
+        name: 'inft_id',
+        type: 'felt',
+      },
+    ],
+    outputs: [
+      {
+        name: 'starknet_id',
+        type: 'felt',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    name: 'approve',
+    type: 'function',
+    inputs: [
+      {
+        name: 'to',
+        type: 'felt',
+      },
+      {
+        name: 'starknet_id',
+        type: 'Uint256',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    name: 'setApprovalForAll',
+    type: 'function',
+    inputs: [
+      {
+        name: 'operator',
+        type: 'felt',
+      },
+      {
+        name: 'approved',
+        type: 'felt',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    name: 'transferFrom',
+    type: 'function',
+    inputs: [
+      {
+        name: '_from',
+        type: 'felt',
+      },
+      {
+        name: 'to',
+        type: 'felt',
+      },
+      {
+        name: 'starknet_id',
+        type: 'Uint256',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    name: 'safeTransferFrom',
+    type: 'function',
+    inputs: [
+      {
+        name: '_from',
+        type: 'felt',
+      },
+      {
+        name: 'to',
+        type: 'felt',
+      },
+      {
+        name: 'starknet_id',
+        type: 'Uint256',
+      },
+      {
+        name: 'data_len',
+        type: 'felt',
+      },
+      {
+        name: 'data',
+        type: 'felt*',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    name: 'mint',
+    type: 'function',
+    inputs: [
+      {
+        name: 'starknet_id',
+        type: 'felt',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    name: 'set_user_data',
+    type: 'function',
+    inputs: [
+      {
+        name: 'starknet_id',
+        type: 'felt',
+      },
+      {
+        name: 'field',
+        type: 'felt',
+      },
+      {
+        name: 'data',
+        type: 'felt',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    name: 'set_extended_user_data',
+    type: 'function',
+    inputs: [
+      {
+        name: 'starknet_id',
+        type: 'felt',
+      },
+      {
+        name: 'field',
+        type: 'felt',
+      },
+      {
+        name: 'data_len',
+        type: 'felt',
+      },
+      {
+        name: 'data',
+        type: 'felt*',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    name: 'set_verifier_data',
+    type: 'function',
+    inputs: [
+      {
+        name: 'starknet_id',
+        type: 'felt',
+      },
+      {
+        name: 'field',
+        type: 'felt',
+      },
+      {
+        name: 'data',
+        type: 'felt',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    name: 'set_extended_verifier_data',
+    type: 'function',
+    inputs: [
+      {
+        name: 'starknet_id',
+        type: 'felt',
+      },
+      {
+        name: 'field',
+        type: 'felt',
+      },
+      {
+        name: 'data_len',
+        type: 'felt',
+      },
+      {
+        name: 'data',
+        type: 'felt*',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    name: 'equip',
+    type: 'function',
+    inputs: [
+      {
+        name: 'inft_contract',
+        type: 'felt',
+      },
+      {
+        name: 'inft_id',
+        type: 'felt',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    name: 'unequip',
+    type: 'function',
+    inputs: [
+      {
+        name: 'inft_contract',
+        type: 'felt',
+      },
+      {
+        name: 'inft_id',
+        type: 'felt',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    name: 'upgrade',
+    type: 'function',
+    inputs: [
+      {
+        name: 'new_implementation',
+        type: 'felt',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    name: 'set_token_uri_base',
+    type: 'function',
+    inputs: [
+      {
+        name: 'arr_len',
+        type: 'felt',
+      },
+      {
+        name: 'arr',
+        type: 'felt*',
+      },
+    ],
+    outputs: [],
   },
 ];
