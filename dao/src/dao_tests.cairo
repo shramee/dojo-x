@@ -1,7 +1,7 @@
 use core::option::OptionTrait;
 use core::array::ArrayTrait;
 use core::traits::TryInto;
-use super::base::{BaseDAO, Actions};
+use super::dao_contract::{BaseDAO, Actions};
 use starknet::{ContractAddress, contract_address_const};
 use starknet::testing::set_caller_address;
 use debug::PrintTrait;
@@ -89,7 +89,7 @@ fn test_unpassing_proposal() {
     // other two parties in DAO will vote no, majority against the proposal
     set_caller_address(contract_address_const::<0xea8141>());
     BaseDAO::vote(proposalId, false);
-    
+
     set_caller_address(contract_address_const::<0xea8142>());
     BaseDAO::vote(proposalId, false);
 
