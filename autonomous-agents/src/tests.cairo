@@ -5,7 +5,7 @@ use dojo_core::auth::systems::{Route, RouteTrait};
 use dojo_core::interfaces::{IWorldDispatcherTrait, IWorldDispatcher};
 use dojo_core::test_utils::spawn_test_world;
 use dojo_autonomous_agents::components::{
-    PosComponent, VelComponent, AccComponent, ColorComponent, ZERO, val_from_2xpc
+    PosComponent, VelComponent, AccComponent, ColorComponent, ZERO, RANGE, val_from_2xpc
 };
 use dojo_autonomous_agents::systems::{Spawn, Update};
 use debug::PrintTrait;

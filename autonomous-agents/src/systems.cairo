@@ -89,7 +89,7 @@ mod Update {
     }
 
     fn execute(ctx: Context) {
-        let (mpx, mpy, mvx, mvy, ) = update_physics(ctx, 'mover');
+        let (mut mpx, mut mpy, mvx, mvy, ) = update_physics(ctx, 'mover');
         let (spx, spy, svx, svy, ) = update_physics(ctx, 'seeker');
         commands::set_entity(
             'mover'.into(),
