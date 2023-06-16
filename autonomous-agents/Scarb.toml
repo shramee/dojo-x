@@ -19,8 +19,7 @@ initializer_class_hash = "0xbeef"
 
 [tool.dojo.env]
 rpc_url = "http://localhost:5050/"
-account_address = "0x06f62894bfd81d2e396ce266b2ad0f21e0668d604e5bb1077337b6d570a54aea"
-private_key = "0x07230b49615d175307d580c33d6fda61fc7b9aec91df0f5c1a5ebe3b8cbfee02"
+account_address = "0x0390595E0f30299328F610C689fcFf5B0ee48eE971f0742b5568e5Dd1DE6e324"
 
 keystore_path = "../keystore.json"
 keystore_password = "password"
