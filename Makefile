@@ -1,3 +1,5 @@
+
+
 build:
 	cd ./autonomous-agents; sozo build
 
@@ -13,11 +15,23 @@ indexer:
 
 deploy:
 	@cd ./autonomous-agents; \
-	SOZO_OUT="$$(sozo migrate --rpc-url http://localhost:5050)"; echo "$$SOZO_OUT"; \
+	SOZO_OUT="$$(sozo migrate)"; echo "$$SOZO_OUT"; \
 	WORLD_ADDR="$$(echo "$$SOZO_OUT" | grep "World at address" | rev | cut -d " " -f 1 | rev)"; \
 	[ -n "$$WORLD_ADDR" ] && \
 		echo "$$WORLD_ADDR" > ../last_deployed_world && \
 		echo "$$SOZO_OUT" > ../deployed.log;
+
+# Usage: make ecs_exe s=Spawn
+ecs_exe:
+	@WORLD_ADDR=$$(tail -n1 ./last_deployed_world); \
+	cd ./autonomous-agents; echo "sozo execute $(s) --world $$WORLD_ADDR"; \
+	sozo execute $(s) --world $$WORLD_ADDR
+
+# Usage: make ecs_ntt c=Acc e=1
+ecs_ntt:
+	@WORLD_ADDR=$$(tail -n1 ./last_deployed_world); \
+	cd ./autonomous-agents; echo "sozo component entity $(c) $(e) --world $$WORLD_ADDR"; \
+	sozo component entity $(c) $(e) --world $$WORLD_ADDR
 
 serve:
 	@cd ./client; \

@@ -5,13 +5,13 @@ mod Spawn {
     use dojo_autonomous_agents::components::{Color, Pos, Vel, Acc, ZERO, val_from_2xpc};
 
     fn execute(ctx: Context) {
-        commands::set_entity('mover_color'.into(), (Color { v: 0xf50505 }));
-        commands::set_entity('seeker_color'.into(), (Color { v: 0x5f99f0 }));
+        commands::set_entity(3.into(), (Color { v: 0xf50505 }));
+        commands::set_entity(4.into(), (Color { v: 0x5f99f0 }));
         commands::set_entity(
-            'mover'.into(),
+            1.into(),
             (
                 Acc {
-                    x: ZERO, y: ZERO
+                    x: val_from_2xpc(1), y: val_from_2xpc(1)
                     }, Pos {
                     x: ZERO, y: ZERO
                     }, Vel {
@@ -20,8 +20,7 @@ mod Spawn {
             )
         );
         commands::set_entity(
-            'seeker'.into(),
-            (Acc { x: ZERO, y: ZERO }, Pos { x: ZERO, y: ZERO }, Vel { x: ZERO, y: ZERO })
+            2.into(), (Acc { x: ZERO, y: ZERO }, Pos { x: ZERO, y: ZERO }, Vel { x: ZERO, y: ZERO })
         );
         return ();
     }
@@ -89,15 +88,13 @@ mod Update {
     }
 
     fn execute(ctx: Context) {
-        let (mut mpx, mut mpy, mvx, mvy, ) = update_physics(ctx, 'mover');
-        let (spx, spy, svx, svy, ) = update_physics(ctx, 'seeker');
+        let (mut mpx, mut mpy, mvx, mvy, ) = update_physics(ctx, 1);
+        let (spx, spy, svx, svy, ) = update_physics(ctx, 2);
         commands::set_entity(
-            'mover'.into(),
-            (Acc { x: ZERO, y: ZERO }, Pos { x: mpx, y: mpy }, Vel { x: mvx, y: mvy }, )
+            1.into(), (Acc { x: ZERO, y: ZERO }, Pos { x: mpx, y: mpy }, Vel { x: mvx, y: mvy }, )
         );
         commands::set_entity(
-            'seeker'.into(),
-            (Acc { x: ZERO, y: ZERO }, Pos { x: spx, y: spy }, Vel { x: svx, y: svy }, )
+            2.into(), (Acc { x: ZERO, y: ZERO }, Pos { x: spx, y: spy }, Vel { x: svx, y: svy }, )
         );
         return ();
     }
