@@ -46,6 +46,7 @@ class DojoCalls {
   }
 
   async raw_fetch(method, params = []) {
+    console.log(params);
     let req = await fetch(ecs_data.rpc || 'http://localhost:5050', {
       method: 'POST',
       headers: {
@@ -59,6 +60,37 @@ class DojoCalls {
       }),
     });
     return await req.json();
+  }
+
+  async get_pos(entity) {
+    let pos_store_hashes = [
+      // No entity with id 0
+      [],
+      // Entity with id 1
+      [
+        '0x35bb8bbcd50e384fb64d8f2125f420f74427a9d9e54b29941800b97b2cd8cf3',
+        '0x35bb8bbcd50e384fb64d8f2125f420f74427a9d9e54b29941800b97b2cd8cf4',
+      ],
+      // Entity with id 2
+      [
+        '0x79e109b90a9fa15a87f1effe651e498fc129f01e2d0681dfbdab117e2d780cd',
+        '0x79e109b90a9fa15a87f1effe651e498fc129f01e2d0681dfbdab117e2d780ce',
+      ],
+    ];
+
+    return await Promise.all([
+      this.storage(pos_store_hashes[entity][0]),
+      this.storage(pos_store_hashes[entity][1]),
+    ]);
+  }
+
+  async storage(hash) {
+    let resp = await this.raw_fetch('starknet_getStorageAt', [
+      ecs_data.world_addr,
+      hash,
+      'pending',
+    ]);
+    return resp.result || 0;
   }
 
   call() {
