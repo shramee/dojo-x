@@ -1,0 +1,102 @@
+// Positions
+// sozo component entity Pos 1 --world 0x7f1d6c1b15e03673062d8356dc1174d5d85c310479ec49fe781e8bf89e4c4f8/
+
+{
+    "id": 1,
+    "jsonrpc": "2.0",
+    "method": "starknet_getStorageAt",
+    "params": [
+        "0x7f1d6c1b15e03673062d8356dc1174d5d85c310479ec49fe781e8bf89e4c4f8",
+        "0x35bb8bbcd50e384fb64d8f2125f420f74427a9d9e54b29941800b97b2cd8cf4",
+        "pending"
+    ]
+}
+{
+    "jsonrpc": "2.0",
+    "result": "0x31",
+    "id": 1
+}
+
+{
+    "id": 1,
+    "jsonrpc": "2.0",
+    "method": "starknet_getStorageAt",
+    "params": [
+        "0x7f1d6c1b15e03673062d8356dc1174d5d85c310479ec49fe781e8bf89e4c4f8",
+        "0x35bb8bbcd50e384fb64d8f2125f420f74427a9d9e54b29941800b97b2cd8cf3",
+        "pending"
+    ]
+}
+{
+    "jsonrpc": "2.0",
+    "result": "0x7",
+    "id": 1
+}
+
+// sozo component entity Pos 2 --world 0x7f1d6c1b15e03673062d8356dc1174d5d85c310479ec49fe781e8bf89e4c4f8/
+
+{
+    "id": 1,
+    "jsonrpc": "2.0",
+    "method": "starknet_getStorageAt",
+    "params": [
+        "0x7f1d6c1b15e03673062d8356dc1174d5d85c310479ec49fe781e8bf89e4c4f8",
+        "0x79e109b90a9fa15a87f1effe651e498fc129f01e2d0681dfbdab117e2d780ce",
+        "pending"
+    ]
+}
+{
+    "jsonrpc": "2.0",
+    "result": "0x19",
+    "id": 1
+}
+
+{
+    "id": 1,
+    "jsonrpc": "2.0",
+    "method": "starknet_getStorageAt",
+    "params": [
+        "0x7f1d6c1b15e03673062d8356dc1174d5d85c310479ec49fe781e8bf89e4c4f8",
+        "0x79e109b90a9fa15a87f1effe651e498fc129f01e2d0681dfbdab117e2d780cd",
+        "pending"
+    ]
+}
+{
+    "jsonrpc": "2.0",
+    "result": "0x5",
+    "id": 1
+}
+
+// sozo component entity Color 3 --world 0x7f1d6c1b15e03673062d8356dc1174d5d85c310479ec49fe781e8bf89e4c4f8
+{
+    "id": 1,
+    "jsonrpc": "2.0",
+    "method": "starknet_getStorageAt",
+    "params": [
+        "0x7f1d6c1b15e03673062d8356dc1174d5d85c310479ec49fe781e8bf89e4c4f8",
+        "0x1ec89a39b588846d3373ca4e54e75a0782baa98f261686ad6d7ae3990849952",
+        "pending"
+    ]
+}
+{
+    "jsonrpc": "2.0",
+    "result": "0xf50505",
+    "id": 1
+}
+
+// sozo component entity Color 4 --world 0x7f1d6c1b15e03673062d8356dc1174d5d85c310479ec49fe781e8bf89e4c4f8
+{
+    "id": 1,
+    "jsonrpc": "2.0",
+    "method": "starknet_getStorageAt",
+    "params": [
+        "0x7f1d6c1b15e03673062d8356dc1174d5d85c310479ec49fe781e8bf89e4c4f8",
+        "0x442dea03aea5b137ecd1dedf8de3ac8383d60b0d0f9a53b3e61b0aa16bcece4",
+        "pending"
+    ]
+}
+{
+    "jsonrpc": "2.0",
+    "result": "0x5f99f0",
+    "id": 1
+}
