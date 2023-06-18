@@ -46,7 +46,6 @@ class DojoCalls {
   }
 
   async raw_fetch(method, params = []) {
-    console.log(params);
     let req = await fetch(ecs_data.rpc || 'http://localhost:5050', {
       method: 'POST',
       headers: {
@@ -62,7 +61,7 @@ class DojoCalls {
     return await req.json();
   }
 
-  async get_pos(entity) {
+  async entity_position(entity) {
     let pos_store_hashes = [
       // No entity with id 0
       [],
@@ -99,3 +98,9 @@ class DojoCalls {
 }
 
 window.dojo = new DojoCalls();
+window.entity_position = [[]];
+
+setInterval(async () => {
+  window.entity_position[1] = await dojo.entity_position(1);
+  window.entity_position[2] = await dojo.entity_position(2);
+}, 100);

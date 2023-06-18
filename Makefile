@@ -7,7 +7,7 @@ test:
 	cd ./autonomous-agents; sozo test
 
 start:
-	docker compose up
+	node
 
 indexer:
 	@WORLD_ADDR=$$(tail -n1 ./last_deployed_world); \
@@ -20,6 +20,7 @@ deploy:
 	[ -n "$$WORLD_ADDR" ] && \
 		echo "$$WORLD_ADDR" > ../last_deployed_world && \
 		echo "$$SOZO_OUT" > ../deployed.log;
+	sozo execute $(s) --world $$WORLD_ADDR
 
 # Usage: make ecs_exe s=Spawn
 ecs_exe:
@@ -39,3 +40,8 @@ serve:
 	WORLD_ADDR=$$(tail -n1 ../last_deployed_world) cargo run --release;
 
 deploy_and_run: deploy indexer serve
+
+loop:
+	@WORLD_ADDR=$$(tail -n1 ./last_deployed_world); \
+	cd ./autonomous-agents; echo "sozo execute $(s) --world $$WORLD_ADDR"; \
+	node ../run-sozo.js;

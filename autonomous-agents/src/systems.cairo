@@ -11,7 +11,7 @@ mod Spawn {
             1.into(),
             (
                 Acc {
-                    x: val_from_2xpc(1), y: val_from_2xpc(1)
+                    x: val_from_2xpc(100), y: val_from_2xpc(100)
                     }, Pos {
                     x: ZERO, y: ZERO
                     }, Vel {
@@ -43,53 +43,40 @@ mod Update {
         serde::Serde::<Vec2>::deserialize(ref p).expect('missing data')
     }
 
-    // fn phy_component_span(px: u32, py: u32, vx: u32, vy: u32, ax: u32, ay: u32) -> Span<felt252> {
-    //     let mut arr = ArrayTrait::<felt252>::new();
-    //     arr.append(px.into());
-    //     arr.append(py.into());
-    //     arr.append(vx.into());
-    //     arr.append(vy.into());
-    //     arr.append(ax.into());
-    //     arr.append(ay.into());
-    //     arr.span()
-    // }
-
-    // fn set_physics_entity(
-    //     ctx: Context, entity_id: felt252, px: u32, py: u32, vx: u32, vy: u32, ax: u32, ay: u32
-    // ) {
-    //     ctx
-    //         .world
-    //         .set_entity(
-    //             ctx,
-    //             entity_id,
-    //             QueryTrait::new(0, 0, phy_component_span(px, py, vx, vy, ax, ay)),
-    //             0_u8,
-    //             phy_component_span(px, py, vx, vy, ax, ay)
-    //         );
-    // }
-
-    // fn vec_set_entity(ctx: Context, component: felt252, entity_id: felt252) -> Vec2 {
-    //     let mut p = ctx.world.entity(component, entity_id.into(), 0_u8, 0_usize);
-    //     serde::Serde::<Vec2>::deserialize(ref p).expect('missing data')
-    // }
-
     fn update_physics(ctx: Context, entity_id: felt252) -> (u32, u32, u32, u32, ) {
         let mut p = vec_entity(ctx, 'Pos', entity_id);
         let mut v = vec_entity(ctx, 'Vel', entity_id);
         let mut a = vec_entity(ctx, 'Acc', entity_id);
 
+        p.x -= ZERO / 2;
+        p.y -= ZERO / 2;
+        v.x -= ZERO / 2;
+        v.y -= ZERO / 2;
+        a.x -= ZERO / 2;
+        a.y -= ZERO / 2;
+
+        p.x.print();
+        p.y.print();
+        v.x.print();
+        v.y.print();
+        a.x.print();
+        a.y.print();
+
         // Add acceleration to velocity
-        v.x += a.x - ZERO;
-        v.y += a.y - ZERO;
+        'Adding acc'.print();
+        v.x += a.x;
+        v.y += a.y;
         // Add velocity to position
-        p.x += v.x - ZERO;
-        p.y += v.y - ZERO;
+        'Adding vel'.print();
+        p.x += v.x - ZERO / 2;
+        p.y += v.y - ZERO / 2;
         (p.x, p.y, v.x, v.y)
     }
 
     fn execute(ctx: Context) {
-        let (mut mpx, mut mpy, mvx, mvy, ) = update_physics(ctx, 1);
+        let (mpx, mpy, mvx, mvy, ) = update_physics(ctx, 1);
         let (spx, spy, svx, svy, ) = update_physics(ctx, 2);
+
         commands::set_entity(
             1.into(), (Acc { x: ZERO, y: ZERO }, Pos { x: mpx, y: mpy }, Vel { x: mvx, y: mvy }, )
         );
